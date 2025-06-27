@@ -1,6 +1,6 @@
 """
-For each variable of interest, plot the average test loss over all combinations of other variables
-as a function of quantization precision.
+For each variable of interest, plot the maximum test loss over all combinations of other variables
+as a function of quantization precision (worst case scenario).
 """
 
 import matplotlib.pyplot as plt
@@ -15,10 +15,11 @@ y_col = 'testLoss'
 variables_of_interest = ['dataset', 'numLayers', 'numNodes', 'featureSet', 'numFeatures', 'quantizationMethod']
 
 log_y = True  # Set to False for linear y-axis
-log_y_base = 2  # Can use 2 for more detail at the low end, or 10 for standard log
+log_y_base = 2  # Use 2 for more detail at the low end, or 10 for standard log
 
 for variable_of_interest in variables_of_interest:
-    grouped = df.groupby([x_col, variable_of_interest])[y_col].mean().reset_index()
+    # Group by quantizationPrecision and the variable of interest, then take maximum testLoss
+    grouped = df.groupby([x_col, variable_of_interest])[y_col].max().reset_index()
 
     plt.figure(figsize=(8, 5))
     for value in grouped[variable_of_interest].unique():
@@ -26,8 +27,8 @@ for variable_of_interest in variables_of_interest:
         plt.plot(subset[x_col], subset[y_col], marker='o', label=f"{variable_of_interest}={value}")
 
     plt.xlabel(x_col)
-    plt.ylabel(f"Average {y_col}")
-    plt.title(f"Average {y_col} vs {x_col} for each {variable_of_interest}")
+    plt.ylabel(f"Maximum {y_col}")
+    plt.title(f"Maximum {y_col} vs {x_col} for each {variable_of_interest} (Worst Case)")
     plt.xscale('log', base=2)
 
     # Set x-ticks to actual values
@@ -36,10 +37,9 @@ for variable_of_interest in variables_of_interest:
 
     if log_y:
         plt.yscale('log', base=log_y_base)
-        plt.ylabel(f"Average {y_col} (log base {log_y_base})")
+        plt.ylabel(f"Maximum {y_col} (log base {log_y_base})")
 
     plt.legend(title=variable_of_interest)
     plt.tight_layout()
-    plt.savefig(f'nn_experiment_result_plot_averages_{variable_of_interest}.pdf', bbox_inches='tight')
-    plt.close()
-
+    plt.savefig(f'nn_experiment_result_plot_maxima_{variable_of_interest}.pdf', bbox_inches='tight')
+    plt.close() 
