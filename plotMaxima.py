@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # Load the CSV file
-df = pd.read_csv('C:/Users/ejb13/Downloads/experiment_results(22).csv')
+df = pd.read_csv('C:/Users/ejb13/Downloads/experiment_results_largerange.csv')
 
 x_col = 'quantizationPrecision'
 y_col = 'testLoss'
@@ -41,5 +41,5 @@ for variable_of_interest in variables_of_interest:
 
     plt.legend(title=variable_of_interest)
     plt.tight_layout()
-    plt.savefig(f'nn_experiment_result_plot_maxima_{variable_of_interest}.pdf', bbox_inches='tight')
+    plt.savefig(f'nn_experiment_result_plot_maxima_{variable_of_interest}_largerange.pdf', bbox_inches='tight')
     plt.close() 
