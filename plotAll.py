@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Load the CSV file
-df = pd.read_csv('C:/Users/ejb13/Downloads/experiment_results(22).csv')
+df = pd.read_csv('C:/Users/ejb13/Downloads/experiment_results_largerange.csv') # choose file name 
 
 # Identify the columns
 x_col = 'quantizationPrecision'
@@ -30,6 +30,6 @@ plt.title('Test Loss vs Quantization Precision for Different Network Configurati
 plt.xscale('log', base=2)  # Set x-axis to log base 2
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), fontsize='small', ncol=3)
 plt.tight_layout(rect=[0, 0.15, 1, 1])  # Make room at the bottom
-plt.savefig('nn_experiment_result_plot_all.pdf', bbox_inches='tight')  # Save the plot to a PDF
+plt.savefig('nn_experiment_result_plot_all_largerange.pdf', bbox_inches='tight')  # Choose name to save the plot to a PDF
 plt.show()
 
